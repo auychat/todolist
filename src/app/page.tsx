@@ -1,9 +1,13 @@
-import Image from 'next/image'
+import Content from "./components/Content";
+import Header from "./components/Header";
 
 export default function Home() {
   return (
-    <main>
-      <h1>Todo List</h1>
+    <main className="bg-[#F2F2F2] h-screen p-8">
+      <div className="max-w-[720px] mx-auto p-8 bg-white rounded-lg">
+        <Header />
+        <Content />
+      </div>
     </main>
-  )
+  );
 }
