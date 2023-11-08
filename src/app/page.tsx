@@ -19,10 +19,10 @@ export default function Home() {
         <Header />
         <div>
           {showAddTodo ? (
-            <AddTodo />
+            <AddTodo showAddTodo={handleShowAddTodo} />
           ) : (
             <>
-              <Button btnColor="blue-primary" onClick={handleShowAddTodo}>
+              <Button btnColor="blue-primary" className="w-full" onClick={handleShowAddTodo}>
                 Add New Todo
               </Button>
               <Content />

@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { TodoContext } from "../context/TodoContext";
 import Button from "./custom/Button";
 
 const Content = () => {
-  const { todos } = useContext(TodoContext);
+  const { rawTodos } = useContext(TodoContext);
 
   return (
     <div>
@@ -22,7 +22,7 @@ const Content = () => {
       </div>
 
       <ul className="flex flex-col gap-8">
-        {todos.map((todo) => (
+        {rawTodos.todos.map((todo) => (
           <li key={todo.id}>
             <div className="flex justify-between bg-white p-6 rounded-lg shadow-lg">
               {/* Text Content */}

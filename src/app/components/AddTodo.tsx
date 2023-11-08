@@ -1,55 +1,63 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Button from "./custom/Button";
+import { TodoContext } from "../context/TodoContext";
 
 interface IFormInput {
-  title: string;
+  id: number;
+  task: string;
   description: string;
   dueDate: string;
-  priority: PriorityEnum;
-  status: StatusEnum;
+  priority: string;
+  completed: boolean;
 }
 
-enum PriorityEnum {
-  Low = "Low",
-  Medium = "Medium",
-  High = "High",
+interface AddTodoProps {
+  showAddTodo: () => void;
 }
 
-enum StatusEnum {
-  Todo = "Todo",
-  Doing = "Doing",
-  Done = "Done",
-}
+const AddTodo = ({showAddTodo}: AddTodoProps) => {
+  const { rawTodos, addTodo } = useContext(TodoContext);
 
-const AddTodo = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<IFormInput>();
-  const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    // console.log(data);
+    const newData = {
+      ...data,
+      id: rawTodos.todos.length + 1,
+    }
+    // console.log(newData)
+    addTodo(newData);
+    showAddTodo();
+  };
+
+  // handle add new todo
 
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
       <label>Title</label>
-      <input type="text" {...register("title")} />
+      <input type="text" {...register("task")} />
       <label>Description</label>
       <input type="text" {...register("description")} />
       <label>Due Date</label>
       <input type="date" {...register("dueDate")} />
       <label>Priority</label>
       <select {...register("priority")}>
-        <option value={PriorityEnum.Low}>Low</option>
-        <option value={PriorityEnum.Medium}>Medium</option>
-        <option value={PriorityEnum.High}>High</option>
+        <option value={"Low"}>Low</option>
+        <option value={"Medium"}>Medium</option>
+        <option value={"High"}>High</option>
       </select>
-      <select {...register("status")}>
-        <option value={StatusEnum.Todo}>Todo</option>
-        <option value={StatusEnum.Doing}>Doing</option>
-        <option value={StatusEnum.Done}>Done</option>
+      <select {...register("completed")}>
+        <option value={"false"}>False</option>
+        <option value={"true"}>True</option>
       </select>
-      <Button type="submit" btnColor="blue-primary">Add Todo</Button>
+      <Button type="submit" btnColor="blue-primary">
+        Add Todo
+      </Button>
     </form>
   );
 };
