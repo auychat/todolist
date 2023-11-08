@@ -1,23 +1,44 @@
-'use client'
+"use client";
 
 import React, { useContext } from "react";
 import { TodoContext } from "../context/TodoContext";
+import Button from "./custom/Button";
 
 const Content = () => {
   const { todos } = useContext(TodoContext);
 
   return (
     <div>
-      <h1>Your Todo List</h1>
-      <ul>
+      {/* Sort */}
+      <div className="flex gap-8">
+        <p>Low</p>
+        <p>Medium</p>
+        <p>High</p>
+      </div>
+      <div className="flex gap-8">
+        <p>Todo</p>
+        <p>Doing</p>
+        <p>Done</p>
+      </div>
+
+      <ul className="flex flex-col gap-8">
         {todos.map((todo) => (
           <li key={todo.id}>
-            <div>
-              <h3>{todo.task}</h3>
-              <p>{todo.description}</p>
-              <p>Due Date : {todo.dueDate}</p>
-              <p>Priority: {todo.priority}</p>
-              <p>Status: {todo.completed ? "Done" : "Doing"}</p>
+            <div className="flex justify-between bg-white p-6 rounded-lg shadow-lg">
+              {/* Text Content */}
+              <div className="flex flex-col gap-2">
+                <h3 className="font-bold text-xl">{todo.task}</h3>
+                <p>{todo.description}</p>
+                <p>Due Date : {todo.dueDate}</p>
+                <p>Priority: {todo.priority}</p>
+                <p>Status: {todo.completed ? "Done" : "Doing"}</p>
+              </div>
+
+              {/* Edit Delete */}
+              <div>
+                <p>edit</p>
+                <p>delete</p>
+              </div>
             </div>
           </li>
         ))}
