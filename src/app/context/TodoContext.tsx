@@ -8,6 +8,8 @@ import { ITodoContext, ITodoListData, ITodoItem } from "./TodoInterface";
 export const TodoContext = createContext<ITodoContext>({
   rawTodos: { todos: [] },
   addTodo: () => {},
+  editTodo: () => {},
+  deleteTodo: () => {},
 });
 
 // Create a provider for the todo list context
@@ -20,16 +22,32 @@ export const TodoProvider: React.FC<{ children: React.ReactNode }> = ({
   // Add a new todo to the list
   const addTodo = (newTodo: ITodoItem) => {
     const newTodos = todos.concat(newTodo);
-    console.log("oldTodo", todos)
-    console.log("newTodos", newTodos)
     setTodos(newTodos);
   };
 
-  console.log("todos", todos)
+  // Edit a todo in the list
+  const editTodo = (todoId: number) => {
+    const newTodos = todos.map((todo) => {
+      if (todo.id === todoId) {
+        todo.completed = !todo.completed;
+      }
+      return todo;
+    });
+    setTodos(newTodos);
+  };
+
+  // Delete a todo from the list
+  const deleteTodo = (todoId: number) => {
+    const newTodos = todos.filter((todo) => todo.id !== todoId);
+    setTodos(newTodos);
+  };
+
 
   const contextValue: ITodoContext ={
     rawTodos: {todos: todos},
     addTodo: addTodo,
+    editTodo: editTodo,
+    deleteTodo: deleteTodo,
   }
 
   return (

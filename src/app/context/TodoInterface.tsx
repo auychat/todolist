@@ -14,4 +14,6 @@ export interface ITodoListData {
 export interface ITodoContext {
     rawTodos: ITodoListData;
     addTodo: (todo: ITodoItem) => void;
+    editTodo: (todoId: number) => void;
+    deleteTodo: (todoId: number) => void;
 }

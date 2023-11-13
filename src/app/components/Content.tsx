@@ -1,11 +1,21 @@
 "use client";
 
-import React, { useContext, useEffect } from "react";
+import React, { useContext,useState, useEffect } from "react";
 import { TodoContext } from "../context/TodoContext";
 import Button from "./custom/Button";
 
 const Content = () => {
-  const { rawTodos } = useContext(TodoContext);
+  const { rawTodos, editTodo, deleteTodo } = useContext(TodoContext);
+
+  const handleEditTodo = (todoId : number) => {
+    console.log("edit todo id", todoId);
+  }
+
+  const handleDeleteTodo = (todoId : number) => {
+    console.log("delete todo id", todoId);
+    alert(`Are you sure you want to delete todo id ${todoId}`);
+    deleteTodo(todoId);
+  }
 
   return (
     <div>
@@ -35,9 +45,21 @@ const Content = () => {
               </div>
 
               {/* Edit Delete */}
-              <div>
-                <p>edit</p>
-                <p>delete</p>
+              <div className="flex flex-col gap-4 items-center justify-center">
+                <button
+                  type="button"
+                  className="w-[100px] h-[50px] bg-blue-500 rounded-lg text-white font-bold hover:bg-opacity-75"
+                  onClick={() => handleEditTodo(todo.id)}
+                >
+                  edit
+                </button>
+                <button
+                  type="button"
+                  className="w-[100px] h-[50px] bg-red-500 rounded-lg text-white font-bold hover:bg-opacity-75"
+                  onClick={() => handleDeleteTodo(todo.id)}
+                >
+                  delete
+                </button>
               </div>
             </div>
           </li>
